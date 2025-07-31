@@ -23,6 +23,9 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
         <configuration>
+                <source>18</source>
+                <target>18</target>
+            </configuration>
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
