@@ -6,10 +6,10 @@ mvn clean package install
 set +x
 
 echo '📦 Extracting <name> from pom.xml...'
-NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout | sed 's/[^[:print:]]//g')
+NAME=$(mvn help:evaluate -Dexpression=project.name -q -DforceStdout | sed -E 's/\x1B\[[0-9;]*[JKmsu]//g')
 
 echo '📦 Extracting <version> from pom.xml...'
-VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/[^[:print:]]//g')
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed -E 's/\x1B\[[0-9;]*[JKmsu]//g')
 
 JAR_FILE="target/${NAME}-${VERSION}.jar"
 
@@ -21,5 +21,7 @@ if [ -f "$JAR_FILE" ]; then
   set +x
 else
   echo "❌ ERROR: JAR file not found: $JAR_FILE"
+  echo "📄 Try checking the actual files in 'target/' directory:"
+  ls -lh target/
   exit 1
 fi
